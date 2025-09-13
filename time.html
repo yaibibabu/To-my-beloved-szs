@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>永恒的爱 - 我们的故事</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            --accent-gradient: linear-gradient(45deg, #e6b0ff, #c8a4ff, #a5d8ff);
+            --pink-accent: #ff9ecb;
+            --purple-accent: #c8a4ff;
+            --blue-accent: #a5d8ff;
+            --light-purple: #e6b0ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--primary-gradient);
+            color: #fff;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            cursor: default;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        /* 初始问题页面 */
+        .question-screen {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: fadeIn 1s ease-out;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .question-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-gradient);
+            border-radius: 8px 8px 0 0;
+        }
+
+        /* 顶部装饰 */
+        .top-decoration {
+            width: 100%;
+            height: 30px;
+            position: relative;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .heart-line {
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--light-purple), var(--purple-accent), var(--light-purple), transparent);
+            position: relative;
+        }
+
+        .heart-line:before,
+        .heart-line:after {
+            content: '❤';
+            position: absolute;
+            top: -8px;
+            color: var(--pink-accent);
+            font-size: 18px;
+            text-shadow: 0 0 8px rgba(255, 158, 203, 0.7);
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        .heart-line:before {
+            left: 0;
+        }
+
+        .heart-line:after {
+            right: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+            font-family: 'Playfair Display', serif;
+            padding: 0 8px;
+            opacity: 0;
+            animation: fadeInUp 1s 0.5s forwards;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .option-btn {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            background: var(--accent-gradient);
+            color: #1a1a2e;
+            box-shadow: 0 5px 15px rgba(165, 216, 255, 0.4);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            min-width: 120px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .option-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.4s;
+        }
+
+        .option-btn:hover:before {
+            left: 100%;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(165, 216, 255, 0.6);
+        }
+
+        /* 温柔提示页面 */
+        .gentle-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 46, 0.97);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .gentle-screen.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .flowers-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flower {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0;
+            animation: fallDown 8s linear forwards;
+            color: var(--light-purple);
+            text-shadow: 0 0 8px rgba(230, 176, 255, 0.6);
+        }
+
+        @keyframes fallDown {
+            0% {
+                transform: translateY(-80px) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .gentle-message {
+            margin-top: 1.5rem;
+            font-size: 1.8rem;
+            color: var(--light-purple);
+            text-align: center;
+            font-weight: bold;
+            z-index: 52;
+            opacity: 0;
+            animation: fadeInMessage 0.4s 0.8s forwards;
+            text-shadow: 0 0 15px rgba(230, 176, 255, 0.7);
+            max-width: 80%;
+            line-height: 1.3;
+            font-family: 'Dancing Script', cursive;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            border: 1px solid rgba(230, 176, 255, 0.25);
+        }
+
+        @keyframes fadeInMessage {
+            to { opacity: 1; }
+        }
+
+        .back-btn {
+            margin-top: 1.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            z-index: 52;
+            opacity: 0;
+            animation: fadeInMessage 0.4s 1.2s forwards;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+        }
+
+        /* 书本样式 */
+        .book-3d {
+            position: relative;
+            width: 100%;
+            height: 380px;
+            perspective: 1800px;
+            margin: 0.5rem 0;
+        }
+
+        .page-3d {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.98);
+            border-radius: 10px;
+            box-shadow: 0 0 25px rgba(230, 176, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            padding: 25px;
+            transform-origin: left center;
+            z-index: 1;
+        }
+
+        .page-3d:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px);
+            background-size: 100% 18px;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.25;
+        }
+
+        .page-3d::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            bottom: 8px;
+            left: 8px;
+            border: 1px solid rgba(230, 176, 255, 0.15);
+            border-radius: 6px;
+            pointer-events: none;
+        }
+
+        .page-3d.flipped {
+            transform: rotateY(-180deg);
+            z-index: 2;
+        }
+
+        .page-content {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            z-index: 2;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .page-content p {
+            line-height: 1.7;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: justify;
+            text-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+            font-family: 'Playfair Display', serif;
+            transition: all 0.8s ease;
+            opacity: 0;
+            transform: translateY(15px);
+            word-break: break-word;
+            white-space: normal;
+        }
+
+        .page-content p.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 投影文字效果（确保文本可见） */
+        .projected-text {
+            text-shadow:
+                    0 0 8px rgba(230, 176, 255, 0.7),
+                    0 0 15px rgba(230, 176, 255, 0.5),
+                    0 0 25px rgba(230, 176, 255, 0.3);
+            color: rgba(255, 255, 255, 0.95);
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        .flip-btn {
+            position: absolute;
+            bottom: 15px;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .flip-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .flip-prev {
+            left: 20px;
+        }
+
+        .flip-next {
+            right: 20px;
+        }
+
+        /* 内容屏幕 */
+        .content-screen {
+            width: 100%;
+            max-width: 800px;
+            height: 90vh;
+            opacity: 0;
+            transform: translateY(15px);
+            pointer-events: none;
+            position: absolute;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            transition: all 0.4s ease;
+        }
+
+        .content-screen.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+            position: relative;
+        }
+
+        /* 浪漫承诺 */
+        .promise-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0.5rem 0;
+            perspective: 800px;
+        }
+
+        .promise {
+            font-size: 1.8rem;
+            text-align: center;
+            color: var(--light-purple);
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(230, 176, 255, 0.5);
+            opacity: 0;
+            transform: translateY(30px) rotateX(80deg);
+            transition: all 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            padding: 1.2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 0 30px rgba(230, 176, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            line-height: 1.3;
+            width: 100%;
+            max-width: 700px;
+            border: 1px solid rgba(230, 176, 255, 0.25);
+            font-family: 'Dancing Script', cursive;
+            z-index: 5;
+        }
+
+        .promise.show {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotateX(0); box-shadow: 0 0 30px rgba(230, 176, 255, 0.3); }
+            50% { transform: scale(1.03) rotateX(4deg); box-shadow: 0 0 45px rgba(230, 176, 255, 0.5); }
+        }
+
+        /* 环绕爱心效果 */
+        .circle-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        .circle-heart {
+            position: absolute;
+            font-size: 18px;
+            color: var(--pink-accent);
+            opacity: 0;
+            animation: circleRotate 15s linear infinite;
+            text-shadow: 0 0 8px rgba(255, 158, 203, 0.6);
+        }
+
+        @keyframes circleRotate {
+            0% {
+                transform: rotate(0deg) translateX(100px) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: rotate(360deg) translateX(100px) rotate(-360deg);
+                opacity: 0.8;
+            }
+        }
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 18px;
+            opacity: 0;
+            animation: float 8s linear infinite;
+            color: var(--pink-accent);
+            text-shadow: 0 0 8px rgba(255, 158, 203, 0.6);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* 背景元素 */
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            animation: floatParticle 15s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* 浪漫背景元素 */
+        .romantic-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            color: var(--pink-accent);
+            opacity: 0;
+            animation: floatingHearts 15s linear infinite;
+            text-shadow: 0 0 10px rgba(255, 158, 203, 0.7);
+        }
+
+        @keyframes floatingHearts {
+            0% {
+                transform: translate(0, 100vh) rotate(0deg);
+                opacity: 0.7;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(calc(100vw * var(--random-x)), -80px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle 3s infinite;
+            box-shadow: 0 0 8px #fff;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        /* 转场效果 - 增强版 */
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-gradient);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+            overflow: hidden;
+        }
+
+        .transition-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .transition-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: scale(0.8);
+            font-family: 'Dancing Script', cursive;
+            transition: all 0.6s ease;
+            position: relative;
+            z-index: 102;
+        }
+
+        .transition-text.show {
+            opacity: 1;
+            transform: scale(1);
+            animation: pulseText 1.2s infinite alternate;
+        }
+
+        @keyframes pulseText {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        /* 新增动画效果 */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 增强的转场动画元素 */
+        .transition-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 101;
+        }
+
+        .transition-heart {
+            position: absolute;
+            font-size: 24px;
+            color: var(--pink-accent);
+            opacity: 0;
+            animation: transitionHeart 2s ease-out forwards;
+            text-shadow: 0 0 10px rgba(255, 158, 203, 0.7);
+        }
+
+        @keyframes transitionHeart {
+            0% {
+                transform: translateY(100vh) scale(0.5) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1.5) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 新增：点击特效 - 已放大 */
+        .click-effect {
+            position: absolute;
+            pointer-events: none;
+            z-index: 9999;
+            animation: clickAnimation 1.5s forwards;
+            font-size: 40px; /* 放大字体 */
+        }
+
+        @keyframes clickAnimation {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(4); /* 放大动画 */
+                opacity: 0;
+            }
+        }
+
+        /* 新增：爱心爆炸效果 */
+        .heart-explosion {
+            position: absolute;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .heart-particle {
+            position: absolute;
+            font-size: 28px; /* 放大爱心粒子 */
+            color: var(--pink-accent);
+            opacity: 0;
+            animation: heartParticle 1.5s ease-out forwards;
+            text-shadow: 0 0 12px rgba(255, 158, 203, 0.8); /* 增强发光效果 */
+        }
+
+        @keyframes heartParticle {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(
+                        calc(var(--tx) * 150px), /* 增加扩散距离 */
+                        calc(var(--ty) * 150px)
+                ) scale(2); /* 放大结束尺寸 */
+                opacity: 0;
+            }
+        }
+
+        /* 新增：花瓣飘落效果 */
+        .petal {
+            position: absolute;
+            font-size: 32px; /* 放大花瓣 */
+            opacity: 0;
+            pointer-events: none;
+            z-index: 999;
+            animation: petalFall 12s linear forwards;
+        }
+
+        @keyframes petalFall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 新增：粒子文字效果 */
+        .particle-text-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        .text-particle {
+            position: absolute;
+            width: 8px; /* 放大粒子 */
+            height: 8px;
+            border-radius: 50%;
+            background: var(--pink-accent);
+            opacity: 0;
+            animation: textParticle 2s ease-out forwards;
+        }
+
+        @keyframes textParticle {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(
+                        calc(var(--tx) * 1px),
+                        calc(var(--ty) * 1px)
+                );
+                opacity: 0.8;
+            }
+        }
+
+        /* 每个字符的过渡效果 */
+        .typewriter p {
+            border-right: 2px solid rgba(255, 255, 255, 0.8);
+            margin: 0;
+            padding-right: 2px;
+            display: inline-block;
+            white-space: normal;
+        }
+
+        .typewriter .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(6px) scale(0.98);
+            transition: opacity 260ms cubic-bezier(.2,.9,.2,1), transform 260ms cubic-bezier(.2,.9,.2,1);
+            will-change: opacity, transform;
+        }
+
+        .typewriter .char.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .typewriter-effect {
+            animation: blink 0.8s step-end infinite;
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        /* ================================================================ */
+
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .book-3d {
+                height: 340px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .promise {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.5rem; }
+            .question-screen {
+                padding: 1.5rem;
+            }
+            .options {
+                flex-direction: column;
+                gap: 0.8rem;
+                margin-top: 1.2rem;
+            }
+            .option-btn {
+                width: 100%;
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .book-3d {
+                height: 300px;
+            }
+
+            .page-content {
+                padding: 1.2rem;
+            }
+
+            .page-content p {
+                font-size: 1.1rem;
+                line-height: 1.6;
+            }
+
+            .promise {
+                font-size: 1.4rem;
+                padding: 1rem;
+                line-height: 1.2;
+            }
+
+            .gentle-message { font-size: 1.5rem; }
+
+            .container {
+                padding: 8px;
+            }
+
+            .content-screen {
+                padding: 8px;
+            }
+
+            .transition-text {
+                font-size: 2rem;
+            }
+
+            .back-btn {
+                margin-top: 1.2rem;
+            }
+
+            .top-decoration, .bottom-decoration {
+                height: 25px;
+            }
+
+            .flip-btn {
+                width: 40px;
+                height: 40px;
+                bottom: 12px;
+            }
+
+            .flip-prev {
+                left: 12px;
+            }
+
+            .flip-next {
+                right: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.3rem; }
+            .promise {
+                font-size: 1.2rem;
+                padding: 0.8rem;
+            }
+
+            .book-3d {
+                height: 280px;
+            }
+
+            .page-content {
+                padding: 1rem;
+            }
+
+            .page-content p {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+
+            .top-decoration, .bottom-decoration {
+                height: 20px;
+            }
+
+            .flip-btn {
+                width: 35px;
+                height: 35px;
+                bottom: 10px;
+            }
+
+            .flip-prev {
+                left: 8px;
+            }
+
+            .flip-next {
+                right: 8px;
+            }
+
+            .gentle-message {
+                font-size: 1.2rem;
+                padding: 12px;
+            }
+        }
+
+        /* 新增：减少动画对性能的影响 */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* 新增：焦点状态样式，提高可访问性 */
+        button:focus {
+            outline: 2px solid var(--light-purple);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+<div class="floating-particles" id="floatingParticles"></div>
+<div class="romantic-elements" id="romanticElements"></div>
+<div class="transition-overlay" id="transitionOverlay">
+    <div class="transition-hearts" id="transitionHearts"></div>
+    <div class="transition-text" id="transitionText">我就知道你是最聪明的！</div>
+</div>
+
+<div class="container">
+    <!-- 顶部装饰 -->
+    <div class="top-decoration">
+        <div class="heart-line"></div>
+    </div>
+
+    <!-- 初始问题页面 -->
+    <div class="question-screen" id="questionScreen">
+        <h1>"时间"一定是真实存在的吗？</h1>
+        <div class="options">
+            <button class="option-btn" id="optionYes">当然存在</button>
+            <button class="option-btn" id="optionNo">让我想想</button>
+        </div>
+    </div>
+
+    <!-- 温柔提示页面 -->
+    <div class="gentle-screen" id="gentleScreen">
+        <div class="flowers-container" id="flowersContainer"></div>
+        <div class="gentle-message">这都答不对，你是笨蛋吗？</div>
+        <button class="back-btn" id="backFromGentle">返回</button>
+    </div>
+
+    <!-- 重新设计的内容页面 -->
+    <div class="content-screen" id="contentScreen">
+        <!-- 3D书本容器 -->
+        <div class="book-3d" id="book3d">
+            <!-- 页面将通过JS动态生成 -->
+        </div>
+
+        <!-- 翻页按钮 -->
+        <button class="flip-btn flip-prev" id="flipPrev">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="flip-btn flip-next" id="flipNext">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <div class="promise-container">
+            <div class="circle-hearts" id="circleHearts"></div>
+            <div class="hearts" id="hearts"></div>
+            <div class="promise" id="promise">我的青春一定会以娶你为结尾！</div>
+        </div>
+
+        <!-- 底部装饰 -->
+        <div class="bottom-decoration">
+            <div class="heart-line"></div>
+        </div>
+
+        <button class="back-btn" id="backFromContent">返回</button>
+    </div>
+</div>
+
+<script>
+    // ============ DOM 元素 =============
+    const questionScreen = document.getElementById('questionScreen');
+    const gentleScreen = document.getElementById('gentleScreen');
+    const contentScreen = document.getElementById('contentScreen');
+    const optionYes = document.getElementById('optionYes');
+    const optionNo = document.getElementById('optionNo');
+    const backFromGentle = document.getElementById('backFromGentle');
+    const backFromContent = document.getElementById('backFromContent');
+    const promise = document.getElementById('promise');
+    const floatingParticles = document.getElementById('floatingParticles');
+    const heartsContainer = document.getElementById('hearts');
+    const circleHeartsContainer = document.getElementById('circleHearts');
+    const transitionOverlay = document.getElementById('transitionOverlay');
+    const transitionText = document.getElementById('transitionText');
+    const flowersContainer = document.getElementById('flowersContainer');
+    const romanticElements = document.getElementById('romanticElements');
+    const book3d = document.getElementById('book3d');
+    const flipPrev = document.getElementById('flipPrev');
+    const flipNext = document.getElementById('flipNext');
+    const transitionHearts = document.getElementById('transitionHearts');
+
+    // 文本内容
+    const texts = [
+        '时间或许并非真实存在，在爱因斯坦的广义相对论里，把时间和三维空间合为一体，称为时空。在这个四维空间中，过去，现在，未来，并不是一条逐渐展开的时间线，而是同时存在于宇宙的时空中。也就是说，时间不是流动的，而是静止的维度。那么为什么，我们能够感知到时间的流逝呢？',
+        '我们之所以会感到时间在流动，是因为熵增定律，给了我们心理上的时间箭头。熵是无序且混乱的，宏观世界里，系统自发从有序走向无序，这一过程不可逆。所有的生命都会走到毁灭，恒星会燃尽，黑洞会蒸发，大脑只是记录器。记忆，只能记录从低熵到高熵的方向，因此我们只记得过去，预测未来，便误以为时间在流动。',
+        '而时间流动感，就等于在大脑中写入了读取信息的单向过程，而宇宙层面的时空，时间并不流动，动的只是我们大脑中的记忆。',
+        '我的意思是，时间无论是否真实存在，都无法改变我们相遇的必然性。我们一起看日升日落，经历四季更替，会一起慢慢衰老。我们的每一次相拥，每一个选择，都是在时空中既定轨道上的必然。只要你在，时间便不是冰冷模糊的概念，而是真实存在且具有触感的。'
+    ];
+
+    let currentPage = 0;
+    let pages = [];
+    // 用于记录每页是否已播放打字机动画
+    let hasAnimated = [];
+
+    // ================== 创建3D书本页面（支持打字机效果） ==================
+    function create3DBookPages() {
+        book3d.innerHTML = '';
+        pages = [];
+        hasAnimated = Array(texts.length).fill(false);
+
+        texts.forEach((text, index) => {
+            const page = document.createElement('div');
+            page.className = 'page-3d';
+            page.id = `page${index + 1}`;
+            page.style.zIndex = texts.length - index;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'page-content typewriter';
+
+            const paragraph = document.createElement('p');
+            // 把完整文本保存在 data-full 属性中，初始不填充文本，由 typeWriterEffect 逐字符写入
+            paragraph.dataset.full = text;
+            paragraph.textContent = '';
+            paragraph.classList.add('projected-text');
+
+            contentDiv.appendChild(paragraph);
+            page.appendChild(contentDiv);
+
+            book3d.appendChild(page);
+            pages.push(page);
+        });
+
+        // 重置当前页索引并确保第一页显示状态
+        currentPage = 0;
+        pages.forEach((p, idx) => {
+            if (idx > 0) p.classList.remove('flipped');
+        });
+    }
+
+    // ================== 改进版打字机效果函数（每字符 span + 节奏控制） ==================
+    // pageIndex: 要播放的页码索引；immediate: 如果为 true 则直接完整显示；onComplete: 完成后的回调函数
+    function typeWriterEffect(pageIndex, immediate = false, onComplete = null) {
+        if (!pages[pageIndex]) return;
+        if (hasAnimated[pageIndex] && !immediate) return;
+
+        const page = pages[pageIndex];
+        const paragraph = page.querySelector('p');
+
+        const originalText = paragraph.dataset.full || paragraph.textContent || '';
+        if (!originalText) {
+            hasAnimated[pageIndex] = true;
+            if (onComplete) onComplete();
+            return;
+        }
+
+        // 立刻让段落可见（解决 opacity:0 导致看不见的问题）
+        paragraph.classList.add('show');
+        paragraph.style.opacity = '1';
+        paragraph.style.transform = 'translateY(0)';
+
+        // 如果需要立即显示（跳过打字），直接填充并退出
+        if (immediate) {
+            paragraph.innerHTML = '';
+            for (let ch of originalText) {
+                const sp = document.createElement('span');
+                sp.className = 'char show';
+                sp.textContent = ch;
+                paragraph.appendChild(sp);
+            }
+            paragraph.style.borderRight = 'none';
+            hasAnimated[pageIndex] = true;
+            if (onComplete) onComplete();
+            return;
+        }
+
+        // 清空并逐字符用 span 包裹
+        paragraph.innerHTML = '';
+        const frag = document.createDocumentFragment();
+        for (let ch of originalText) {
+            const sp = document.createElement('span');
+            sp.className = 'char';
+            sp.textContent = ch;
+            frag.appendChild(sp);
+        }
+        paragraph.appendChild(frag);
+
+        // 添加光标闪烁类（CSS 控制）
+        paragraph.classList.add('typewriter-effect');
+        paragraph.style.whiteSpace = 'normal';
+
+        // 人性化速度参数（可调）
+        const baseDelay = 70;     // 基础每字符延迟（ms），改小变快
+        const variance = 60;      // 随机抖动范围（ms）
+        const punctuationPause = 260; // 标点额外停顿（ms）
+
+        let idx = 0;
+        const chars = paragraph.querySelectorAll('.char');
+
+        function nextChar() {
+            if (idx >= chars.length) {
+                // 完成
+                paragraph.classList.remove('typewriter-effect');
+                paragraph.style.borderRight = 'none';
+                hasAnimated[pageIndex] = true;
+                if (onComplete) onComplete();
+                return;
+            }
+
+            const span = chars[idx];
+            span.classList.add('show');
+
+            // 计算延迟：基本 + 随机；标点符号加更长停顿；空格短
+            const ch = span.textContent;
+            let delay = baseDelay + Math.floor(Math.random() * variance);
+
+            // 标点后加停顿，让节奏更优雅
+            if (/[，,\.!\?；;：:、]/.test(ch)) {
+                delay += punctuationPause + Math.floor(Math.random() * 120);
+            } else if (ch === ' ') {
+                delay = Math.max(20, Math.floor(baseDelay * 0.4));
+            }
+
+            idx++;
+            setTimeout(nextChar, delay);
+        }
+
+        // 启动打字（稍微延迟一点更顺眼）
+        setTimeout(nextChar, 80);
+    }
+
+    // ================== 翻页逻辑（保留原行为，新增触发打字机效果） ==================
+    function nextPage() {
+        if (currentPage < texts.length - 1) {
+            pages[currentPage].classList.add('flipped');
+            currentPage++;
+
+            // 当翻到下一页时，如果该页尚未播放打字机效果，触发之
+            setTimeout(() => {
+                // 如果是最后一页，添加完成回调，在打字完成后0.5秒显示承诺
+                if (currentPage === texts.length - 1) {
+                    typeWriterEffect(currentPage, false, () => {
+                        // 打字完成后等待0.5秒再显示承诺
+                        setTimeout(() => {
+                            promise.classList.add('show');
+                            createHearts();
+                            createCircleHearts();
+                            createParticleHeart();
+                        }, 500);
+                    });
+                } else {
+                    typeWriterEffect(currentPage);
+                }
+            }, 350);
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 0) {
+            pages[currentPage].classList.remove('flipped');
+            currentPage--;
+
+            if (currentPage < texts.length - 1) {
+                promise.classList.remove('show');
+            }
+
+            // 如果上一页尚未播放打字机效果，则触发之
+            setTimeout(() => {
+                typeWriterEffect(currentPage);
+            }, 200);
+        }
+    }
+
+    // ================== 其余特效（保留原样） ==================
+    function createParticles() {
+        const particles = [];
+        const particleCount = 40;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+
+            const size = Math.random() * 4 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+
+            particle.style.animationDuration = `${Math.random() * 12 + 12}s`;
+            particle.style.animationDelay = `${Math.random() * 4}s`;
+            particle.style.opacity = '0';
+
+            const colors = ['#ff9ecb', '#c8a4ff', '#a5d8ff', '#e6b0ff'];
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+            floatingParticles.appendChild(particle);
+            particles.push(particle);
+        }
+
+        return particles;
+    }
+
+    function createRomanticElements() {
+        const heartCount = 15;
+        for (let i = 0; i < heartCount; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = '❤';
+
+            heart.style.setProperty('--random-x', Math.random());
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.animationDelay = `${Math.random() * 15}s`;
+            heart.style.fontSize = `${Math.random() * 20 + 16}px`;
+
+            romanticElements.appendChild(heart);
+        }
+
+        const sparkleCount = 30;
+        for (let i = 0; i < sparkleCount; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.top = `${Math.random() * 100}%`;
+            sparkle.style.animationDelay = `${Math.random() * 3}s`;
+            sparkle.style.animationDuration = `${Math.random() * 2 + 2}s`;
+
+            romanticElements.appendChild(sparkle);
+        }
+    }
+
+    function createFlowers() {
+        flowersContainer.innerHTML = '';
+        const flowers = ['🌸', '🌹', '🌺', '🌻', '🌷', '💐', '🍀'];
+        const flowerCount = 25;
+
+        for (let i = 0; i < flowerCount; i++) {
+            const flower = document.createElement('div');
+            flower.classList.add('flower');
+            flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+
+            flower.style.left = `${Math.random() * 100}%`;
+            flower.style.fontSize = `${Math.random() * 20 + 25}px`;
+
+            flower.style.animationDuration = `${Math.random() * 4 + 6}s`;
+            flower.style.animationDelay = `${Math.random() * 1.5}s`;
+
+            flowersContainer.appendChild(flower);
+        }
+    }
+
+    function createHearts() {
+        heartsContainer.innerHTML = '';
+        const heartCount = 15;
+
+        for (let i = 0; i < heartCount; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤';
+
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.top = `${Math.random() * 100}%`;
+
+            heart.style.animationDuration = `${Math.random() * 4 + 4}s`;
+            heart.style.animationDelay = `${Math.random() * 1.5}s`;
+
+            heartsContainer.appendChild(heart);
+        }
+    }
+
+    function createCircleHearts() {
+        circleHeartsContainer.innerHTML = '';
+        const heartCount = 12;
+
+        for (let i = 0; i < heartCount; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('circle-heart');
+            heart.innerHTML = '❤';
+
+            heart.style.animationDelay = `${i * 0.3}s`;
+
+            circleHeartsContainer.appendChild(heart);
+        }
+    }
+
+    function createTransitionHearts() {
+        transitionHearts.innerHTML = '';
+        const heartCount = 20;
+
+        for (let i = 0; i < heartCount; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('transition-heart');
+            heart.innerHTML = '❤';
+
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.animationDelay = `${Math.random() * 0.5}s`;
+            heart.style.fontSize = `${Math.random() * 20 + 20}px`;
+
+            transitionHearts.appendChild(heart);
+        }
+    }
+
+    function createHeartExplosion(x, y) {
+        const explosion = document.createElement('div');
+        explosion.className = 'heart-explosion';
+        explosion.style.left = `${x}px`;
+        explosion.style.top = `${y}px`;
+
+        const particleCount = 16;
+        for (let i = 0; i < particleCount; i++) {
+            const angle = (i / particleCount) * Math.PI * 2;
+            const heart = document.createElement('div');
+            heart.className = 'heart-particle';
+            heart.innerHTML = '❤';
+            heart.style.setProperty('--tx', Math.cos(angle));
+            heart.style.setProperty('--ty', Math.sin(angle));
+            heart.style.animationDelay = `${i * 0.05}s`;
+            explosion.appendChild(heart);
+        }
+
+        document.body.appendChild(explosion);
+
+        setTimeout(() => {
+            if (explosion.parentNode) {
+                document.body.removeChild(explosion);
+            }
+        }, 1500);
+    }
+
+    function createPetals() {
+        const petals = ['🌸', '🌹', '🌺', '🌻', '🌷'];
+        const petalCount = 15;
+
+        for (let i = 0; i < petalCount; i++) {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.innerHTML = petals[Math.floor(Math.random() * petals.length)];
+
+            petal.style.left = `${Math.random() * 100}%`;
+            petal.style.color = ['#ff9ecb', '#e6b0ff', '#c8a4ff', '#a5d8ff'][Math.floor(Math.random() * 4)];
+            petal.style.fontSize = `${Math.random() * 20 + 20}px`;
+            petal.style.animationDuration = `${Math.random() * 6 + 8}s`;
+            petal.style.animationDelay = `${Math.random() * 2}s`;
+
+            document.body.appendChild(petal);
+
+            setTimeout(() => {
+                if (petal.parentNode) {
+                    document.body.removeChild(petal);
+                }
+            }, 13000);
+        }
+    }
+
+    function createClickEffect(x, y) {
+        const effects = ['❤', '✨', '🌹', '🌸', '💖', '💕'];
+        const effectText = effects[Math.floor(Math.random() * effects.length)];
+
+        const clickEffect = document.createElement('div');
+        clickEffect.className = 'click-effect';
+        clickEffect.innerHTML = effectText;
+        clickEffect.style.left = `${x}px`;
+        clickEffect.style.top = `${y}px`;
+        clickEffect.style.color = ['#ff9ecb', '#e6b0ff', '#c8a4ff', '#a5d8ff'][Math.floor(Math.random() * 4)];
+        clickEffect.style.fontSize = `${Math.random() * 20 + 40}px`;
+
+        document.body.appendChild(clickEffect);
+
+        setTimeout(() => {
+            if (clickEffect.parentNode) {
+                document.body.removeChild(clickEffect);
+            }
+        }, 1500);
+    }
+
+    function createParticleHeart() {
+        const heartContainer = document.createElement('div');
+        heartContainer.className = 'particle-text-container';
+
+        const heartPoints = [];
+        for (let t = 0; t < Math.PI * 2; t += 0.1) {
+            const x = 16 * Math.pow(Math.sin(t), 3);
+            const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+            heartPoints.push({x, y});
+        }
+
+        heartPoints.forEach(point => {
+            const particle = document.createElement('div');
+            particle.className = 'text-particle';
+            particle.style.setProperty('--tx', point.x * 10);
+            particle.style.setProperty('--ty', point.y * 10);
+            particle.style.animationDelay = `${Math.random() * 0.5}s`;
+            particle.style.background = ['#ff9ecb', '#e6b0ff', '#c8a4ff'][Math.floor(Math.random() * 3)];
+            heartContainer.appendChild(particle);
+        });
+
+        document.body.appendChild(heartContainer);
+
+        setTimeout(() => {
+            if (heartContainer.parentNode) {
+                document.body.removeChild(heartContainer);
+            }
+        }, 2500);
+    }
+
+    // ================== 转场效果 ==================
+    function showTransition(callback) {
+        createTransitionHearts();
+        createPetals();
+
+        transitionOverlay.classList.add('active');
+        setTimeout(() => {
+            transitionText.classList.add('show');
+        }, 80);
+
+        setTimeout(() => {
+            transitionText.classList.remove('show');
+        }, 2000);
+
+        setTimeout(() => {
+            transitionOverlay.classList.remove('active');
+            if (callback) callback();
+        }, 2500);
+    }
+
+    // ================== 页面切换函数 ==================
+    function showGentleScreen() {
+        createFlowers();
+        createHeartExplosion(window.innerWidth / 2, window.innerHeight / 2);
+
+        questionScreen.style.opacity = '0';
+        questionScreen.style.pointerEvents = 'none';
+
+        setTimeout(() => {
+            gentleScreen.classList.add('active');
+        }, 400);
+    }
+
+    function showContentScreen() {
+        showTransition(() => {
+            questionScreen.style.opacity = '0';
+            questionScreen.style.pointerEvents = 'none';
+
+            contentScreen.classList.add('active');
+
+            // 创建3D书本页面（已是支持打字机效果的版本）
+            create3DBookPages();
+
+            // 显示第一页的文字（打字机效果）
+            setTimeout(() => {
+                typeWriterEffect(0);
+            }, 500);
+        });
+    }
+
+    function backToQuestion() {
+        gentleScreen.classList.remove('active');
+        contentScreen.classList.remove('active');
+
+        // 重置内容页面的动画状态
+        promise.classList.remove('show');
+        heartsContainer.innerHTML = '';
+        circleHeartsContainer.innerHTML = '';
+
+        // 重置 hasAnimated，移除翻页效果
+        hasAnimated = Array(texts.length).fill(false);
+        pages.forEach((page, index) => {
+            if (index > 0) {
+                page.classList.remove('flipped');
+            }
+        });
+        currentPage = 0;
+
+        setTimeout(() => {
+            questionScreen.style.opacity = '1';
+            questionScreen.style.pointerEvents = 'all';
+        }, 400);
+    }
+
+    // ================== 按钮动画和事件绑定 ==================
+    function animateButtons() {
+        const buttons = document.querySelectorAll('.option-btn');
+        buttons.forEach((btn, index) => {
+            btn.style.animation = `fadeInUp 0.8s ${index * 0.2 + 0.8}s forwards`;
+        });
+    }
+
+    optionYes.addEventListener('click', showGentleScreen);
+    optionNo.addEventListener('click', showContentScreen);
+    backFromGentle.addEventListener('click', backToQuestion);
+    backFromContent.addEventListener('click', backToQuestion);
+    flipPrev.addEventListener('click', prevPage);
+    flipNext.addEventListener('click', nextPage);
+
+    document.addEventListener('click', function(e) {
+        createClickEffect(e.clientX, e.clientY);
+    });
+
+    // ================== 初始化 ==================
+    window.onload = function() {
+        createParticles();
+        createRomanticElements();
+        animateButtons();
+
+        // 键盘翻页支持
+        document.addEventListener('keydown', (e) => {
+            if (contentScreen.classList.contains('active')) {
+                if (e.key === 'ArrowRight') {
+                    nextPage();
+                } else if (e.key === 'ArrowLeft') {
+                    prevPage();
+                }
+            }
+        });
+
+        // 触摸滑动支持
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (contentScreen.classList.contains('active')) {
+                if (touchEndX < touchStartX - 50) {
+                    nextPage();
+                } else if (touchEndX > touchStartX + 50) {
+                    prevPage();
+                }
+            }
+        }
+    };
+</script>
+</body>
+</html>
